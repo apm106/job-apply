@@ -16,10 +16,8 @@ form.addEventListener("submit", (event) => {
   const formData = new FormData(form);
   const fullName = String(formData.get("fullName") || "").trim();
   const email = String(formData.get("email") || "").trim();
-  const university = String(formData.get("university") || "").trim();
-  const gradYear = Number(formData.get("gradYear"));
 
-  if (!fullName || !email || !university || !gradYear) {
+  if (!fullName || !email) {
     setStatus("Please complete all fields.", "error");
     return;
   }
@@ -29,16 +27,9 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  if (gradYear < 2026 || gradYear > 2040) {
-    setStatus("Graduation year must be between 2026 and 2040.", "error");
-    return;
-  }
-
   const entry = {
     fullName,
     email,
-    university,
-    gradYear,
     createdAt: new Date().toISOString()
   };
 
