@@ -7,12 +7,15 @@ Legend: `[ ]` pending, `[x]` done
 - [x] Deploy project to Vercel
 - [x] Add AGENTS.md and LLM workflow files
 
-## Frontend Improvements
-- [ ] Improve hero layout and visual hierarchy
-- [ ] Add a second interactive component (e.g. counter or form)
-- [ ] Add basic accessibility checks (focus states, contrast)
-- [ ] Add simple error boundary pattern for JS interactions
+## Landing Page (MVP)
+- [x] Build waitlist/sales page for one-click grad jobs concept
+- [x] Position messaging for Accounting university students
+- [x] Add waitlist form with client-side validation
+- [x] Ensure responsive mobile/desktop layout
 
-## Quality
-- [ ] Add lightweight CI check (HTML/CSS/JS lint)
-- [ ] Add deploy checklist to README
+## Next MVP Tasks
+- [ ] Connect waitlist to backend storage (Supabase/Firebase/API)
+- [ ] Add email verification or double opt-in flow
+- [ ] Add analytics tracking for CTA + form conversions
+- [ ] Add employer/source examples for credibility
+- [ ] Add lightweight CI checks and deploy checklist

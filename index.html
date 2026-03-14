@@ -3,15 +3,106 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basic Frontend Webapp</title>
+    <title>One-Click Grad Jobs | Accounting Student Waitlist</title>
+    <meta
+      name="description"
+      content="Join the waitlist for a one-click grad-jobs platform built for Accounting university students."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app">
-      <h1>Basic Frontend Webapp</h1>
-      <p id="message">Loading...</p>
-      <button id="actionBtn" type="button">Click Me</button>
+    <div class="ambient" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand">OneClickGrad</div>
+      <a class="text-link" href="#waitlist">Join Waitlist</a>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <p class="eyebrow">MVP: Accounting Graduate Roles</p>
+        <h1>Apply to accounting grad jobs in one click.</h1>
+        <p class="subtitle">
+          We aggregate graduate listings across firms and platforms, then let you apply
+          through one streamlined profile.
+        </p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#waitlist">Get Early Access</a>
+          <a class="btn ghost" href="#how-it-works">How It Works</a>
+        </div>
+        <ul class="hero-points" aria-label="Key benefits">
+          <li>Built for university students</li>
+          <li>Focused on accounting pathways</li>
+          <li>Fast applications, less admin</li>
+        </ul>
+      </section>
+
+      <section id="how-it-works" class="container steps">
+        <h2>How it works</h2>
+        <div class="grid-3">
+          <article class="card">
+            <p class="step-num">01</p>
+            <h3>Set your profile once</h3>
+            <p>Add degree details, graduation year, and preferred locations.</p>
+          </article>
+          <article class="card">
+            <p class="step-num">02</p>
+            <h3>Discover aggregated listings</h3>
+            <p>We bring graduate accounting roles into one searchable pipeline.</p>
+          </article>
+          <article class="card">
+            <p class="step-num">03</p>
+            <h3>Apply in one click</h3>
+            <p>Submit applications quickly without repeating the same form everywhere.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container for-who">
+        <h2>Who this MVP is for</h2>
+        <p>
+          Current focus is Accounting university students targeting graduate programs in
+          Australia. Join now to shape the roadmap and get early access.
+        </p>
+      </section>
+
+      <section id="waitlist" class="container waitlist">
+        <div class="waitlist-card">
+          <div>
+            <h2>Join the waitlist</h2>
+            <p>Early members get first access and product updates.</p>
+          </div>
+
+          <form id="waitlistForm" novalidate>
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" autocomplete="name" required />
+
+            <label for="email">University email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+
+            <label for="university">University</label>
+            <input id="university" name="university" type="text" required />
+
+            <label for="gradYear">Graduation year</label>
+            <input id="gradYear" name="gradYear" type="number" min="2026" max="2040" required />
+
+            <button class="btn primary" type="submit">Join Waitlist</button>
+            <p id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
     </main>
+
+    <footer class="container footer">
+      <p>OneClickGrad · Accounting Grad Jobs · Waitlist MVP</p>
+    </footer>
+
     <script src="main.js" defer></script>
   </body>
 </html>
