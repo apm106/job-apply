@@ -1,0 +1,11 @@
+{
+  "name": "job-apply",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}

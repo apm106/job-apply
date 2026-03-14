@@ -10,14 +10,14 @@ function setStatus(message, tone) {
   statusEl.className = tone;
 }
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
-  const fullName = String(formData.get("fullName") || "").trim();
+  const name = String(formData.get("fullName") || "").trim();
   const email = String(formData.get("email") || "").trim();
 
-  if (!fullName || !email) {
+  if (!name || !email) {
     setStatus("Please complete all fields.", "error");
     return;
   }
@@ -27,17 +27,31 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  const entry = {
-    fullName,
-    email,
-    createdAt: new Date().toISOString()
-  };
+  const submitButton = form.querySelector("button[type='submit']");
+  submitButton.disabled = true;
+  setStatus("Submitting...", "");
 
-  const raw = localStorage.getItem("waitlistEntries");
-  const list = raw ? JSON.parse(raw) : [];
-  list.push(entry);
-  localStorage.setItem("waitlistEntries", JSON.stringify(list));
+  try {
+    const response = await fetch("/api/waitlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, email })
+    });
 
-  form.reset();
-  setStatus("You're on the list. We'll reach out before launch.", "success");
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      setStatus(data.error || "Something went wrong. Please try again.", "error");
+      return;
+    }
+
+    form.reset();
+    setStatus("You're on the list. We'll reach out before launch.", "success");
+  } catch (error) {
+    setStatus("Network error. Please try again.", "error");
+  } finally {
+    submitButton.disabled = false;
+  }
 });

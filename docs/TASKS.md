@@ -14,7 +14,7 @@ Legend: `[ ]` pending, `[x]` done
 - [x] Ensure responsive mobile/desktop layout
 
 ## Next MVP Tasks
-- [ ] Connect waitlist to backend storage (Supabase/Firebase/API)
+- [x] Connect waitlist to backend storage (PostgreSQL API)
 - [ ] Add email verification or double opt-in flow
 - [ ] Add analytics tracking for CTA + form conversions
 - [ ] Add employer/source examples for credibility

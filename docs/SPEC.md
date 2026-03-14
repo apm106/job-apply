@@ -17,7 +17,7 @@ Landing page + waitlist for a one-click graduate jobs platform.
 - Includes waitlist form collecting:
   - Name
   - Email
-- Performs client-side validation and stores entries in browser `localStorage`.
+- Performs client-side validation and submits entries to `/api/waitlist`.
 
 ## Functional Requirements
 - App loads without build step.
@@ -26,13 +26,11 @@ Landing page + waitlist for a one-click graduate jobs platform.
 - Form has accessible labels and live status feedback.
 
 ## Non-Goals (current stage)
-- Live backend waitlist storage
 - Authenticated user accounts
 - Real one-click application submission flow
 - Job source integrations
 
 ## Next Feature Areas
-- Connect waitlist form to backend (API/database)
 - Add social proof and partner logos
 - Add role/location filters mock for future product preview
 - Add analytics events for CTA and form conversion

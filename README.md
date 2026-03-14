@@ -15,6 +15,13 @@ Example:
 npx serve .
 ```
 
+For full-stack local testing (frontend + `/api/waitlist`):
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
+
 ## Deploy to Vercel
 
 1. Install the Vercel CLI:
@@ -31,6 +38,26 @@ npx serve .
    ```
 
 Vercel will automatically serve `index.html` as the app entrypoint.
+
+## Database Setup (PostgreSQL)
+
+1. Create a PostgreSQL database (Supabase, Neon, Vercel Postgres, etc.).
+2. Run schema SQL from [db/schema.sql](/Users/archit/Desktop/projects/job-apply/db/schema.sql).
+3. Set environment variables:
+   - `DATABASE_URL`
+   - `DATABASE_SSL` (optional, default `true`)
+
+### Vercel env vars
+
+```bash
+vercel env add DATABASE_URL production
+vercel env add DATABASE_SSL production
+```
+
+Redeploy after adding env vars:
+```bash
+vercel --prod
+```
 
 ## LLM Workflow
 
