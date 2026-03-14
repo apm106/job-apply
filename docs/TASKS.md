@@ -19,6 +19,6 @@ Legend: `[ ]` pending, `[x]` done
 
 - [x] Connect waitlist to backend storage (PostgreSQL API)
 - [ ] Add email verification or double opt-in flow
-- [ ] Add analytics tracking for CTA + form conversions
+- [x] Add analytics tracking for CTA + form conversions
 - [ ] Add employer/source examples for credibility
 - [x] Add lightweight CI checks and deploy checklist
