@@ -15,8 +15,8 @@ Landing page + waitlist for a one-click graduate jobs platform.
   2. Browse aggregated listings
   3. Apply in one click
 - Includes waitlist form collecting:
-  - Full name
-  - University email
+  - Name
+  - Email
 - Performs client-side validation and stores entries in browser `localStorage`.
 
 ## Functional Requirements

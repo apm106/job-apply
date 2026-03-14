@@ -1,7 +1,7 @@
 const form = document.getElementById("waitlistForm");
 const statusEl = document.getElementById("formStatus");
 
-function isUniversityEmail(email) {
+function isValidEmail(email) {
   return /.+@.+\..+/.test(email);
 }
 
@@ -22,7 +22,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  if (!isUniversityEmail(email)) {
+  if (!isValidEmail(email)) {
     setStatus("Please enter a valid email address.", "error");
     return;
   }
