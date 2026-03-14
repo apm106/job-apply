@@ -15,7 +15,7 @@ Legend: `[ ]` pending, `[x]` done
 
 ## Next MVP Tasks
 - [x] Connect waitlist to backend storage (PostgreSQL API)
-- [x] Add email verification or double opt-in flow
+- [ ] Add email verification or double opt-in flow
 - [ ] Add analytics tracking for CTA + form conversions
 - [ ] Add employer/source examples for credibility
 - [ ] Add lightweight CI checks and deploy checklist
