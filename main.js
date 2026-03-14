@@ -48,7 +48,13 @@ form.addEventListener("submit", async (event) => {
     }
 
     form.reset();
-    setStatus("You're on the list. We'll reach out before launch.", "success");
+
+    if (data.alreadyVerified) {
+      setStatus("This email is already verified and on the waitlist.", "success");
+      return;
+    }
+
+    setStatus("Check your email to confirm your waitlist signup.", "success");
   } catch (error) {
     setStatus("Network error. Please try again.", "error");
   } finally {

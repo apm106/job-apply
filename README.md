@@ -15,7 +15,7 @@ Example:
 npx serve .
 ```
 
-For full-stack local testing (frontend + `/api/waitlist`):
+For full-stack local testing (frontend + API routes):
 ```bash
 npm install
 cp .env.example .env
@@ -43,15 +43,32 @@ Vercel will automatically serve `index.html` as the app entrypoint.
 
 1. Create a PostgreSQL database (Supabase, Neon, Vercel Postgres, etc.).
 2. Run schema SQL from [db/schema.sql](/Users/archit/Desktop/projects/job-apply/db/schema.sql).
-3. Set environment variables:
+3. If you already have an existing table from older versions, run migration:
+   [db/migrations/001_add_email_verification.sql](/Users/archit/Desktop/projects/job-apply/db/migrations/001_add_email_verification.sql)
+4. Set environment variables:
    - `DATABASE_URL`
    - `DATABASE_SSL` (optional, default `true`)
 
-### Vercel env vars
+## Double Opt-In Email Setup
 
+The waitlist now uses email verification:
+1. User submits Name + Email.
+2. API sends verification email with unique token.
+3. User clicks link to `verify.html`.
+4. `/api/verify-email` marks the record verified.
+
+Required environment variables:
+- `RESEND_API_KEY`
+- `FROM_EMAIL`
+- `APP_BASE_URL`
+
+Add Vercel env vars:
 ```bash
 vercel env add DATABASE_URL production
 vercel env add DATABASE_SSL production
+vercel env add RESEND_API_KEY production
+vercel env add FROM_EMAIL production
+vercel env add APP_BASE_URL production
 ```
 
 Redeploy after adding env vars:

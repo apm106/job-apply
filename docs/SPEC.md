@@ -18,12 +18,17 @@ Landing page + waitlist for a one-click graduate jobs platform.
   - Name
   - Email
 - Performs client-side validation and submits entries to `/api/waitlist`.
+- Uses double opt-in:
+  - Sends verification email with one-time token
+  - Confirms via `/verify.html` + `/api/verify-email`
+  - Marks entry as verified in database
 
 ## Functional Requirements
 - App loads without build step.
 - Works on modern mobile and desktop browsers.
 - Deployed and accessible on Vercel.
 - Form has accessible labels and live status feedback.
+- Verification tokens expire after 24 hours.
 
 ## Non-Goals (current stage)
 - Authenticated user accounts
