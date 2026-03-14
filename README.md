@@ -11,11 +11,13 @@ A minimal static frontend app ready for Vercel deployment and LLM-assisted itera
 Open `index.html` directly in your browser, or serve with any static server.
 
 Example:
+
 ```bash
 npx serve .
 ```
 
 For full-stack local testing (frontend + `/api/waitlist`):
+
 ```bash
 npm install
 cp .env.example .env
@@ -39,6 +41,25 @@ npm run dev
 
 Vercel will automatically serve `index.html` as the app entrypoint.
 
+Deployment process checklist:
+
+- [DEPLOY_CHECKLIST.md](/Users/archit/Desktop/projects/job-apply/DEPLOY_CHECKLIST.md)
+
+## Quality Checks
+
+Run strict local checks before push/deploy:
+
+```bash
+npm run check
+```
+
+Individual commands:
+
+```bash
+npm run lint
+npm run format:check
+```
+
 ## Database Setup (PostgreSQL)
 
 1. Create a PostgreSQL database (Supabase, Neon, Vercel Postgres, etc.).
@@ -55,6 +76,7 @@ vercel env add DATABASE_SSL production
 ```
 
 Redeploy after adding env vars:
+
 ```bash
 vercel --prod
 ```

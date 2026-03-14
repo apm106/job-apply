@@ -116,7 +116,9 @@ h1 {
   padding: 0.72rem 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 140ms ease, background-color 140ms ease;
+  transition:
+    transform 140ms ease,
+    background-color 140ms ease;
 }
 
 .btn:hover {

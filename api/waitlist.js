@@ -32,7 +32,9 @@ module.exports = async function handler(req, res) {
   }
 
   const name = String(req.body?.name || "").trim();
-  const email = String(req.body?.email || "").trim().toLowerCase();
+  const email = String(req.body?.email || "")
+    .trim()
+    .toLowerCase();
 
   if (!name || !email) {
     return res.status(400).json({ error: "Name and email are required" });
