@@ -21,7 +21,7 @@ Landing page + waitlist for a one-click graduate jobs platform.
   - Name
   - Email
 - Performs client-side validation and submits entries to `/api/waitlist`.
-- Tracks conversion funnel analytics (no PII) across frontend and backend outcomes.
+- Tracks minimal conversion analytics (no PII) for landing view and waitlist submit start/success.
 
 ## Functional Requirements
 

@@ -1,6 +1,13 @@
 const form = document.getElementById("waitlistForm");
 const statusEl = document.getElementById("formStatus");
 
+const analytics = {
+  enabled: false,
+  publicKey: "",
+  host: "",
+  distinctId: ""
+};
+
 function isValidEmail(email) {
   return /.+@.+\..+/.test(email);
 }
@@ -10,31 +17,89 @@ function setStatus(message, tone) {
   statusEl.className = tone;
 }
 
-function track(event, properties) {
-  if (globalThis.Analytics && typeof globalThis.Analytics.capture === "function") {
-    globalThis.Analytics.capture(event, properties);
+function getDistinctId() {
+  const key = "ocg_analytics_distinct_id";
+
+  try {
+    const existing = localStorage.getItem(key);
+    if (existing) {
+      return existing;
+    }
+
+    const created =
+      globalThis.crypto && typeof globalThis.crypto.randomUUID === "function"
+        ? globalThis.crypto.randomUUID()
+        : `anon-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    localStorage.setItem(key, created);
+    return created;
+  } catch (_error) {
+    return `anon-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
 }
 
-function classifyError(status) {
-  if (globalThis.Analytics && typeof globalThis.Analytics.classifyApiError === "function") {
-    return globalThis.Analytics.classifyApiError(status);
-  }
-
-  if (status === 400) {
-    return "validation_error";
-  }
-
-  if (status === 409) {
-    return "duplicate_email";
-  }
-
-  if (status >= 500) {
-    return "server_error";
-  }
-
-  return "unknown_error";
+function normalizeHost(host) {
+  return String(host || "")
+    .trim()
+    .replace(/\/+$/, "");
 }
+
+async function track(event, properties = {}) {
+  if (!analytics.enabled) {
+    return;
+  }
+
+  try {
+    await fetch(`${analytics.host}/capture/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        api_key: analytics.publicKey,
+        event,
+        properties: {
+          distinct_id: analytics.distinctId,
+          source: "frontend",
+          ...properties
+        }
+      })
+    });
+  } catch (_error) {
+    // Keep app behavior independent from analytics network issues.
+  }
+}
+
+async function initAnalytics() {
+  try {
+    const response = await fetch("/api/analytics-config", {
+      method: "GET",
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data = await response.json().catch(() => null);
+    if (!data?.publicKey || !data?.host) {
+      return;
+    }
+
+    analytics.publicKey = String(data.publicKey).trim();
+    analytics.host = normalizeHost(data.host);
+    analytics.distinctId = getDistinctId();
+    analytics.enabled = Boolean(analytics.publicKey && analytics.host);
+
+    if (analytics.enabled) {
+      track("landing_page_view", { page: "landing" });
+    }
+  } catch (_error) {
+    analytics.enabled = false;
+  }
+}
+
+initAnalytics();
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -44,19 +109,11 @@ form.addEventListener("submit", async (event) => {
   const email = String(formData.get("email") || "").trim();
 
   if (!name || !email) {
-    track("waitlist_submit_failed", {
-      form: "waitlist",
-      error_type: "validation_missing_fields"
-    });
     setStatus("Please complete all fields.", "error");
     return;
   }
 
   if (!isValidEmail(email)) {
-    track("waitlist_submit_failed", {
-      form: "waitlist",
-      error_type: "validation_invalid_email"
-    });
     setStatus("Please enter a valid email address.", "error");
     return;
   }
@@ -79,10 +136,6 @@ form.addEventListener("submit", async (event) => {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      track("waitlist_submit_failed", {
-        form: "waitlist",
-        error_type: classifyError(response.status)
-      });
       setStatus(data.error || "Something went wrong. Please try again.", "error");
       return;
     }
@@ -91,10 +144,6 @@ form.addEventListener("submit", async (event) => {
     track("waitlist_submit_succeeded", { form: "waitlist" });
     setStatus("You're on the list. We'll reach out before launch.", "success");
   } catch (error) {
-    track("waitlist_submit_failed", {
-      form: "waitlist",
-      error_type: "network_error"
-    });
     setStatus("Network error. Please try again.", "error");
   } finally {
     submitButton.disabled = false;

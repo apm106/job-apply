@@ -83,17 +83,11 @@ vercel --prod
 
 ## Conversion Analytics (PostHog)
 
-Analytics tracks the full waitlist funnel with no PII in event payloads:
+Analytics is intentionally minimal right now and tracks only three frontend events (no PII):
 
 - `landing_page_view`
-- `cta_click`
 - `waitlist_submit_started`
 - `waitlist_submit_succeeded`
-- `waitlist_submit_failed`
-- `waitlist_api_success`
-- `waitlist_api_duplicate_email`
-- `waitlist_api_validation_error`
-- `waitlist_api_server_error`
 
 Required env vars:
 
@@ -109,9 +103,9 @@ vercel env add POSTHOG_HOST production
 
 Verification:
 
-1. Open site and click CTAs/form.
+1. Open site once to trigger `landing_page_view`.
 2. Submit waitlist once with valid data.
-3. Check PostHog live events for frontend + backend event names above.
+3. Check PostHog live events for the three event names above.
 
 ## LLM Workflow
 
