@@ -1,22 +1,12 @@
 # Basic Frontend Webapp
 
-A minimal static frontend app ready for Vercel deployment and LLM-assisted iteration.
+A static waitlist + auth-ready web app deployed on Vercel.
 
 ## Repo
 
 - GitHub: `https://github.com/apm106/job-apply`
 
 ## Run locally
-
-Open `index.html` directly in your browser, or serve with any static server.
-
-Example:
-
-```bash
-npx serve .
-```
-
-For full-stack local testing (frontend + `/api/waitlist`):
 
 ```bash
 npm install
@@ -26,64 +16,33 @@ npm run dev
 
 ## Deploy to Vercel
 
-1. Install the Vercel CLI:
-   ```bash
-   npm i -g vercel
-   ```
-2. Login and deploy from this directory:
-   ```bash
-   vercel
-   ```
-3. For production deployment:
-   ```bash
-   vercel --prod
-   ```
-
-Vercel will automatically serve `index.html` as the app entrypoint.
+```bash
+vercel --prod
+```
 
 Deployment process checklist:
 
 - [DEPLOY_CHECKLIST.md](/Users/archit/Desktop/projects/job-apply/DEPLOY_CHECKLIST.md)
 
-## Quality Checks
-
-Run strict local checks before push/deploy:
+## Quality checks
 
 ```bash
 npm run check
+npm test
+npm run test:e2e
 ```
 
-Individual commands:
+## Database setup (PostgreSQL)
 
-```bash
-npm run lint
-npm run format:check
-```
-
-## Database Setup (PostgreSQL)
-
-1. Create a PostgreSQL database (Supabase, Neon, Vercel Postgres, etc.).
+1. Create PostgreSQL database.
 2. Run schema SQL from [db/schema.sql](/Users/archit/Desktop/projects/job-apply/db/schema.sql).
-3. Set environment variables:
+3. Set env vars:
    - `DATABASE_URL`
-   - `DATABASE_SSL` (optional, default `true`)
+   - `DATABASE_SSL` (optional)
 
-### Vercel env vars
+## Conversion analytics (minimal PostHog)
 
-```bash
-vercel env add DATABASE_URL production
-vercel env add DATABASE_SSL production
-```
-
-Redeploy after adding env vars:
-
-```bash
-vercel --prod
-```
-
-## Conversion Analytics (PostHog)
-
-Analytics is intentionally minimal right now and tracks only three frontend events (no PII):
+Tracked frontend events:
 
 - `landing_page_view`
 - `waitlist_submit_started`
@@ -92,33 +51,39 @@ Analytics is intentionally minimal right now and tracks only three frontend even
 Required env vars:
 
 - `POSTHOG_PUBLIC_KEY`
-- `POSTHOG_HOST` (custom/self-hosted base URL)
+- `POSTHOG_HOST`
 
-Add in Vercel:
+## Authentication setup (Supabase)
 
-```bash
-vercel env add POSTHOG_PUBLIC_KEY production
-vercel env add POSTHOG_HOST production
-```
+### Required env vars
 
-Verification:
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_JWT_SECRET`
+- `APP_BASE_URL`
+- `AUTH_COOKIE_DOMAIN` (optional)
 
-1. Open site once to trigger `landing_page_view`.
-2. Submit waitlist once with valid data.
-3. Check PostHog live events for the three event names above.
+### Supabase dashboard configuration
 
-## LLM Workflow
+1. Enable Email + Password auth.
+2. Enable Google provider.
+3. Enable email confirmation requirement.
+4. Add redirect URLs:
+   - Local: `http://localhost:3000/api/auth/callback`
+   - Production: `https://job-apply-eta.vercel.app/api/auth/callback`
 
-1. Read `AGENTS.md` for repository rules.
-2. Define or update requirements in `docs/SPEC.md`.
-3. Track work in `docs/TASKS.md`.
-4. Use prompt templates in `prompts/`:
-   - `prompts/feature-task.md`
-   - `prompts/review-task.md`
+### Auth endpoints
 
-## Typical Loop
+- `GET /api/auth/csrf`
+- `POST /api/auth/signup`
+- `POST /api/auth/login`
+- `POST /api/auth/oauth/start`
+- `GET /api/auth/callback`
+- `GET /api/auth/me`
+- `POST /api/auth/logout`
 
-1. Pick one unchecked task from `docs/TASKS.md`.
-2. Make the smallest production-safe change.
-3. Verify locally.
-4. Commit and deploy with `vercel --prod`.
+### Auth pages
+
+- `GET /auth.html` for signup/login
+- `GET /account.html` protected placeholder account page

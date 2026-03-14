@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth | OneClickGrad</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <section class="auth-card">
+        <h1 id="authTitle">Create account</h1>
+        <p id="authSubtext">Sign up to access your profile area.</p>
+        <p id="authMessage" role="status" aria-live="polite"></p>
+
+        <form id="signupForm" class="auth-form" novalidate>
+          <label for="signupEmail">Email</label>
+          <input id="signupEmail" name="email" type="email" required autocomplete="email" />
+
+          <label for="signupPassword">Password</label>
+          <input
+            id="signupPassword"
+            name="password"
+            type="password"
+            required
+            autocomplete="new-password"
+          />
+
+          <button type="submit" class="btn primary">Sign up</button>
+          <button type="button" data-oauth="google" class="btn ghost">Continue with Google</button>
+        </form>
+
+        <form id="loginForm" class="auth-form hidden" novalidate>
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" name="email" type="email" required autocomplete="email" />
+
+          <label for="loginPassword">Password</label>
+          <input
+            id="loginPassword"
+            name="password"
+            type="password"
+            required
+            autocomplete="current-password"
+          />
+
+          <button type="submit" class="btn primary">Log in</button>
+          <button type="button" data-oauth="google" class="btn ghost">Continue with Google</button>
+        </form>
+
+        <p class="auth-toggle">
+          <span id="toggleLabel">Already have an account?</span>
+          <button id="toggleMode" type="button" class="text-link">Log in</button>
+        </p>
+      </section>
+    </main>
+
+    <script src="auth.js" defer></script>
+  </body>
+</html>

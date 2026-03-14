@@ -2,41 +2,40 @@
 
 ## Product
 
-Landing page + waitlist for a one-click graduate jobs platform.
+Landing page + waitlist + secure auth foundations for a one-click graduate jobs platform.
 
 ## Positioning
 
 - Core promise: Apply to grad jobs in one click.
-- MVP audience: Accounting university students pursuing graduate roles.
-- Geography focus (MVP): Australia.
+- Current audience: Accounting university students pursuing graduate roles.
+- Geography focus: Australia.
 
 ## Current Behavior
 
 - Presents value proposition and CTA-driven sales page.
-- Explains 3-step flow:
-  1. Create profile once
-  2. Browse aggregated listings
-  3. Apply in one click
-- Includes waitlist form collecting:
-  - Name
-  - Email
-- Performs client-side validation and submits entries to `/api/waitlist`.
-- Tracks minimal conversion analytics (no PII) for landing view and waitlist submit start/success.
+- Captures waitlist entries (name + email).
+- Provides auth entry points (signup/login) from landing page.
+- Supports secure authentication via Supabase:
+  - Email/password signup + login
+  - Google OAuth start + callback
+  - HttpOnly cookie session management
+  - CSRF checks on state-changing auth routes
+  - Rate limiting on signup/login
+- Includes protected `/account.html` page that redirects unauthenticated users and shows authenticated user placeholder details:
+  - `user_id`
+  - `email`
+  - `created_at`
+  - `providers`
 
 ## Functional Requirements
 
 - App loads without build step.
 - Works on modern mobile and desktop browsers.
 - Deployed and accessible on Vercel.
-- Form has accessible labels and live status feedback.
+- Auth tokens are never stored in localStorage/sessionStorage.
 
 ## Non-Goals (current stage)
 
-- Authenticated user accounts
-- Real one-click application submission flow
-- Job source integrations
-
-## Next Feature Areas
-
-- Add social proof and partner logos
-- Add role/location filters mock for future product preview
+- Full job aggregation and one-click applications
+- Rich profile/dashboard experience
+- Role-based access control

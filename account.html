@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account | OneClickGrad</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <section class="auth-card">
+        <h1>Account</h1>
+        <p id="accountMessage">Loading account details...</p>
+        <dl id="accountDetails" class="account-details hidden">
+          <div>
+            <dt>User ID</dt>
+            <dd id="detailId"></dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd id="detailEmail"></dd>
+          </div>
+          <div>
+            <dt>Created At</dt>
+            <dd id="detailCreatedAt"></dd>
+          </div>
+          <div>
+            <dt>Providers</dt>
+            <dd id="detailProviders"></dd>
+          </div>
+        </dl>
+        <button id="logoutBtn" type="button" class="btn ghost">Log out</button>
+      </section>
+    </main>
+
+    <script src="account.js" defer></script>
+  </body>
+</html>
